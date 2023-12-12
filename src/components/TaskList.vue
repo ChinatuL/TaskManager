@@ -15,7 +15,7 @@ const props = defineProps([
     >
         No tasks
     </h2>
-    <ul class="grid gap-y-2 max-w-sm px-4 md:px-8 md:pb-8">
+    <ul class="grid gap-y-2 max-w-sm px-4 pb-8 md:px-8 md:pb-8">
         <li v-for="task in tasks" :key="task.id">
             <TaskItem
                 :task="task"

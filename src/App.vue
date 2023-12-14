@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { nanoid } from "nanoid";
+import { useToast } from "vue-toastification";
 
 import Header from "./components/Header.vue";
 import FormInput from "./components/FormInput.vue";
@@ -16,23 +17,30 @@ const setLocalStorage = (tasks) => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 };
 
+const toast = useToast();
+
 function addTask(task) {
     const newTask = { id: nanoid(), text: task, completed: false, edit: false };
     const newTasks = [...tasks.value, newTask];
     tasks.value = newTasks;
     setLocalStorage(newTasks);
+    toast.success("Task added");
 }
 
 function deleteTask(id) {
     const newTasks = tasks.value.filter((task) => task.id !== id);
     tasks.value = newTasks;
     setLocalStorage(newTasks);
+    toast.error("Task deleted");
 }
 
 function completeTask(id) {
     const newTasks = tasks.value.map((task) => {
         if (task.id === id) {
             const newTask = { ...task, completed: !task.completed };
+            newTask.completed
+                ? toast.success("Task completed")
+                : toast.error("Task incomplete");
             return newTask;
         }
         return task;
@@ -63,6 +71,7 @@ function editTask(id, text) {
     });
     tasks.value = newTasks;
     setLocalStorage(newTasks);
+    toast.success("Task edited");
 }
 
 function clearTasks() {
@@ -98,6 +107,13 @@ function filterTasks(category) {
                 :editTask="editTask"
             />
         </div>
+        <button
+            v-show="tasks.length > 0"
+            class="btn btn-neutral mt-8 w-40 hover:opacity-70"
+            @click="clearTasks"
+        >
+            Clear All
+        </button>
     </main>
 </template>
 

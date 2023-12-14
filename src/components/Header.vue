@@ -58,7 +58,7 @@ watch(
                     </div>
                     <ul
                         tabindex="0"
-                        class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52"
+                        class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52 font-medium"
                     >
                         <li>
                             <button @click="filterTasks('all')">
@@ -77,12 +77,12 @@ watch(
                         </li>
                     </ul>
                 </div>
-                <a class="btn btn-ghost text-2xl md:text-3xl font-mono"
+                <a class="btn btn-ghost text-2xl md:text-3xl font-mono font-bold text-primary"
                     >TaskManager</a
                 >
             </div>
             <div class="navbar-center hidden lg:flex">
-                <ul class="menu menu-horizontal px-1">
+                <ul class="menu menu-horizontal px-1 font-medium">
                     <li>
                         <button @click="filterTasks('all')">All tasks</button>
                     </li>

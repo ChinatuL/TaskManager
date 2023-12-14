@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from "vue";
 
 const props = defineProps([
     "task",
@@ -25,7 +24,7 @@ const props = defineProps([
             @keyup.enter="editTask(task.id, task.text)"
             class="input input-sm input-bordered w-56"
         />
-        <p v-else>{{ task.text }}</p>
+        <p v-else :class="{cancel: task.completed}">{{ task.text }}</p>
         <div class="flex gap-2">
             <button
                 aria-label="edit task"
@@ -57,3 +56,9 @@ const props = defineProps([
         </div>
     </div>
 </template>
+
+<style scoped>
+.cancel {
+  text-decoration: line-through;
+}
+</style>

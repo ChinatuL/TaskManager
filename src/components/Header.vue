@@ -1,7 +1,8 @@
 <script setup>
 import { ref, watch } from "vue";
 
-const props = defineProps(["filterTasks"]);
+const props = defineProps(["categories", "activeCategory"]);
+const emits = defineEmits(["filterTasks"]);
 
 const themes = {
     winter: "winter",
@@ -60,40 +61,37 @@ watch(
                         tabindex="0"
                         class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52 font-medium"
                     >
-                        <li>
-                            <button @click="filterTasks('all')">
-                                All tasks
-                            </button>
-                        </li>
-                        <li>
-                            <button @click="filterTasks('incomplete')">
-                                Incomplete
-                            </button>
-                        </li>
-                        <li>
-                            <button @click="filterTasks('completed')">
-                                Completed
+                        <li v-for="_category in props.categories">
+                            <button
+                                @click="emits('filterTasks', _category.event)"
+                                class="capitalize"
+                                :class="{
+                                    'bg-neutral text-slate-50':
+                                        _category.event == props.activeCategory,
+                                }"
+                            >
+                                {{ _category.text }}
                             </button>
                         </li>
                     </ul>
                 </div>
-                <a class="btn btn-ghost text-2xl md:text-3xl font-mono font-bold text-primary"
+                <a
+                    class="btn btn-ghost text-2xl md:text-3xl font-mono font-bold text-primary"
                     >TaskManager</a
                 >
             </div>
             <div class="navbar-center hidden lg:flex">
                 <ul class="menu menu-horizontal px-1 font-medium">
-                    <li>
-                        <button @click="filterTasks('all')">All tasks</button>
-                    </li>
-                    <li>
-                        <button @click="filterTasks('incomplete')">
-                            Incomplete
-                        </button>
-                    </li>
-                    <li>
-                        <button @click="filterTasks('completed')">
-                            Completed
+                    <li v-for="_category in props.categories">
+                        <button
+                            @click="emits('filterTasks', _category.event)"
+                            class="capitalize"
+                            :class="{
+                                'bg-neutral text-slate-50':
+                                    _category.event == props.activeCategory,
+                            }"
+                        >
+                            {{ _category.text }}
                         </button>
                     </li>
                 </ul>
